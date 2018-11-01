@@ -2,26 +2,25 @@
 
 const program = require('commander');
 // Require logic.js file and extract controller functions using JS destructuring assignment
-const { addSetup, getSetup, setDefaultProject } = require('./logic');
-const { makeSetup, debug } = require('./firebase')
+const { addSetup, setDefaultProject } = require('./logic');
+const { makeSetup, debug, start } = require('./firebase')
 
 program
   .version('0.0.1')
-  .description('Firebase debugger CLI helper');
+  .description('Firebase debugger CLI helper - MUST have firebase-tools and @google-cloud/functions-emulator');
 
 program
   .command('debug <function>')
   .alias('d')
-  .description('debug a function')
+  .description('Debug a function')
   .action(functionName => {
     debug(functionName)
   });
 
 program
-  .command('config')
+  .command('config <project>')
   .alias('c')
-  .option('-P, --project <project>', 'the project name you are configuring')
-  .description('Get setup from firebase')
+  .description('Setup your firebase config')
   .action(async (options) => {
     addSetup(options.project, await makeSetup())
   });
@@ -29,19 +28,30 @@ program
 program
   .command('set <project>')
   .alias('s')
-  .description('setup default project')
+  .description('Set a default project')
   .action((project) => {
     setDefaultProject(project)
   });
 
 program
-  .command('getSetup <name>')
-  .alias('r')
-  .description('Get contact')
-  .action(name => getSetup(name));
+  .command('start')
+  .description('Start functions emulator')
+  .action(() => start());
 
 // Assert that a VALID command is provided 
-if (!process.argv.slice(2).length || !/[arudl]/.test(process.argv.slice(2))) {
+function isValid(commands) {
+  const validCommand = [
+    'debug',
+    'config',
+    'set',
+    'start',
+    'd',
+    's',
+    'c',
+  ]
+  return commands.length && validCommand.includes(commands[0])
+}
+if (!isValid(process.argv.slice(2))) {
   program.outputHelp();
   process.exit();
 }
