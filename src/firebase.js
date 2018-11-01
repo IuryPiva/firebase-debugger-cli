@@ -19,5 +19,13 @@ module.exports = {
     
     if(stderr) console.log(stderr);
     else console.log(stdout);
+  },
+  start: async () => {
+    const { stdout, stderr }  = await exec(`
+      ./node_modules/.bin/functions start
+    `)
+
+    if(stderr) console.log(stderr);
+    else console.log(stdout);
   }
 }
