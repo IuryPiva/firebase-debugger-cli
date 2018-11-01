@@ -22,7 +22,7 @@ function getSetup(project) {
       project: project
     }, (err, document) => {
       assert.equal(err, null)
-      return document
+      res(document)
     })
   })
 }
