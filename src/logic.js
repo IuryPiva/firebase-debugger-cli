@@ -42,14 +42,32 @@ function setDefaultProject(project) {
   })
 }
 
-function getDefaultProject(project) {
+function getDefaultProject() {
   return new Promise((res, rej) => {
     db.findOne({
-      project: project
+      defaultProject: project
     }, (err, document) => {
       assert.equal(err, null)
-      return document
+      if(document == null) {
+        console.log('No project is set as default')
+        return rej()
+      }
+      res(document.defaultProject)
     })
   })
 }
-module.exports = {addSetup, getSetup, setDefaultProject, getDefaultProject}
+
+function getDefaultSetup() {
+  const project = await getDefaultProject()
+  
+  return new Promise((res, rej) => {
+    db.findOne({
+      project
+    }, (err, document) => {
+      assert.equal(err, null)
+      res(document.setup)
+    })
+  })
+}
+
+module.exports = {addSetup, getSetup, setDefaultProject, getDefaultProject, getDefaultSetup}
