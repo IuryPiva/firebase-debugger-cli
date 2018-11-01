@@ -11,6 +11,7 @@ const Datastore = require('nedb'),
 
 function addSetup(project, setup) {
   db.findOne({ project }, (err, document) => {
+    console.log({ project, setup });
     if (!document) db.insert({ project, setup })
     else db.update({ project }, { $set: { setup } })
   })
@@ -22,12 +23,14 @@ function getSetup(project) {
       project: project
     }, (err, document) => {
       assert.equal(err, null)
+      console.log(document);
       res(document)
     })
   })
 }
 
 function setDefaultProject(project) {
+  console.log(project);
   getSetup(project).then((res) => {
     if(res != null) {
       db.findOne({

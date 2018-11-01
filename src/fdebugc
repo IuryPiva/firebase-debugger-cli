@@ -21,8 +21,8 @@ program
   .command('config <project>')
   .alias('c')
   .description('Setup your firebase config')
-  .action(async (options) => {
-    addSetup(options.project, await makeSetup())
+  .action(async (project) => {
+    addSetup(project, await makeSetup())
   });
 
 program
