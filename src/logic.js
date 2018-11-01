@@ -45,7 +45,7 @@ function setDefaultProject(project) {
 function getDefaultProject() {
   return new Promise((res, rej) => {
     db.findOne({
-      defaultProject: project
+      settings: 'default'
     }, (err, document) => {
       assert.equal(err, null)
       if(document == null) {
