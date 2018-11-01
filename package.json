@@ -2,7 +2,7 @@
   "name": "fdebugc",
   "preferGlobal": true,
   "bin": {
-    "fdebugc": "./src/fdebug"
+    "fdebugc": "./src/fdebugc"
   },
   "version": "1.0.0",
   "description": "",
