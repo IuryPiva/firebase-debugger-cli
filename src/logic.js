@@ -57,7 +57,7 @@ function getDefaultProject() {
   })
 }
 
-function getDefaultSetup() {
+async function getDefaultSetup() {
   const project = await getDefaultProject()
   
   return new Promise((res, rej) => {

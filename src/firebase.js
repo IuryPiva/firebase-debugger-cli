@@ -14,7 +14,7 @@ module.exports = {
   },
   debug: async (functionName) => {
     const { stdout, stderr }  = await exec(`
-      FIREBASE_CONFIG="${JSON.stringify(getDefaultSetup())}" ./node_modules/.bin/functions deploy --trigger-http --timeout 600s ${functionName} && ./node_modules/.bin/functions inspect ${functionName} --port 9229
+      FIREBASE_CONFIG="${JSON.stringify(await getDefaultSetup())}" ./node_modules/.bin/functions deploy --trigger-http --timeout 600s ${functionName} && ./node_modules/.bin/functions inspect ${functionName} --port 9229
     `);
     
     if(stderr) console.log(stderr);
